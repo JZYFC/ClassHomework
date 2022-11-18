@@ -1,25 +1,25 @@
 package io.github.jzyfc.Seven.data;
 
-import io.github.jzyfc.Seven.Displayable;
 import io.github.jzyfc.Seven.serialization.ByteSerializable;
 import io.github.jzyfc.Seven.serialization.SerializeUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
-public class ElectiveCourse implements Displayable, ByteSerializable<ElectiveCourse> {
+public class ElectiveCourse implements Displayable, ByteSerializable<ElectiveCourse>, Modifiable {
     private String electiveID;
     private String studentID;
     private String classID;
 
     @Override
     public String toString() {
-        return "选课号：%s, 学生号：%s, 课程号：%s".formatted(electiveID, studentID, classID);
+        return "选课号：%s, 学生号：%s, 课程号：%s".formatted(getElectiveID(), getStudentID(), getClassID());
     }
 
     public String getElectiveID() {
-        return electiveID;
+        return electiveID != null ? electiveID : "";
     }
 
     public void setElectiveID(String electiveID) {
@@ -27,7 +27,7 @@ public class ElectiveCourse implements Displayable, ByteSerializable<ElectiveCou
     }
 
     public String getStudentID() {
-        return studentID;
+        return studentID != null ? electiveID : "";
     }
 
     public void setStudentID(String studentID) {
@@ -35,7 +35,7 @@ public class ElectiveCourse implements Displayable, ByteSerializable<ElectiveCou
     }
 
     public String getClassID() {
-        return classID;
+        return classID != null ? classID : "";
     }
 
     public void setClassID(String classID) {
@@ -54,9 +54,9 @@ public class ElectiveCourse implements Displayable, ByteSerializable<ElectiveCou
 
     @Override
     public ByteArrayOutputStream serialize(ByteArrayOutputStream base) throws IOException {
-        SerializeUtils.serializeToBytes(this.electiveID, base);
-        SerializeUtils.serializeToBytes(this.studentID, base);
-        SerializeUtils.serializeToBytes(this.classID, base);
+        SerializeUtils.serializeToBytes(getElectiveID(), base);
+        SerializeUtils.serializeToBytes(getStudentID(), base);
+        SerializeUtils.serializeToBytes(getClassID(), base);
         return base;
     }
 
@@ -66,5 +66,32 @@ public class ElectiveCourse implements Displayable, ByteSerializable<ElectiveCou
         this.studentID = SerializeUtils.parseStringFromBytes(base);
         this.classID = SerializeUtils.parseStringFromBytes(base);
         return this;
+    }
+
+    @Override
+    public int getDataCount() {
+        return 3;
+    }
+
+    @Override
+    public List<String> getDataHeader() {
+        return List.of("选课号", "学生号", "课程号");
+    }
+
+    @Override
+    public List<String> getDataRepresentation() {
+        return List.of(getElectiveID(), getStudentID(), getClassID());
+    }
+
+    @Override
+    public List<String> toStrings() {
+        return getDataRepresentation();
+    }
+
+    @Override
+    public void fromStrings(List<String> strings) {
+        this.electiveID = strings.get(0);
+        this.studentID = strings.get(1);
+        this.classID = strings.get(2);
     }
 }

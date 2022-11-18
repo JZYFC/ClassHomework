@@ -5,6 +5,8 @@ import io.github.jzyfc.Seven.serialization.SerializeUtils;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Student extends Person {
     private String studentID;
@@ -13,11 +15,11 @@ public class Student extends Person {
 
     @Override
     public String toString() {
-        return "学号：%s, %s, 专业：%s".formatted(studentID, super.toString(), major);
+        return "学号：%s, %s, 专业：%s".formatted(getStudentID(), super.toString(), getMajor());
     }
 
     public String getStudentID() {
-        return studentID;
+        return studentID != null ? studentID : "";
     }
 
     public void setStudentID(String studentID) {
@@ -25,7 +27,7 @@ public class Student extends Person {
     }
 
     public String getMajor() {
-        return major;
+        return major != null ? major : "";
     }
 
     public void setMajor(String major) {
@@ -49,9 +51,9 @@ public class Student extends Person {
         // super
         super.serialize(base);
         // studentID
-        SerializeUtils.serializeToBytes(this.studentID, base);
+        SerializeUtils.serializeToBytes(getStudentID(), base);
         // major
-        SerializeUtils.serializeToBytes(this.major, base);
+        SerializeUtils.serializeToBytes(getMajor(), base);
         return base;
     }
 
@@ -63,5 +65,38 @@ public class Student extends Person {
         // major
         this.major = SerializeUtils.parseStringFromBytes(base);
         return this;
+    }
+
+    @Override
+    public int getDataCount() {
+        return super.getDataCount() + 2;
+    }
+
+    @Override
+    public List<String> getDataHeader() {
+        List<String> list = new ArrayList<>(List.of("学生ID"));
+        list.addAll(super.getDataHeader());
+        list.add("专业");
+        return list;
+    }
+
+    @Override
+    public List<String> getDataRepresentation() {
+        List<String> list = new ArrayList<>(List.of(getStudentID()));
+        list.addAll(super.getDataRepresentation());
+        list.add(getMajor());
+        return list;
+    }
+
+    @Override
+    public List<String> toStrings() {
+        return getDataRepresentation();
+    }
+
+    @Override
+    public void fromStrings(List<String> strings) {
+        this.studentID = strings.get(0);
+        super.fromStrings(strings.subList(1, 4));
+        this.major = strings.get(4);
     }
 }

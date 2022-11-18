@@ -5,6 +5,8 @@ import io.github.jzyfc.Seven.serialization.SerializeUtils;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Teacher extends Person {
     private String teacherID;
@@ -24,11 +26,11 @@ public class Teacher extends Person {
 
     @Override
     public String toString() {
-        return "教师号：%s, %s, 职称：%s".formatted(teacherID, super.toString(), title);
+        return "教师号：%s, %s, 职称：%s".formatted(getTeacherID(), super.toString(), getTitle());
     }
 
     public String getTeacherID() {
-        return teacherID;
+        return teacherID != null ? teacherID : "";
     }
 
     public void setTeacherID(String teacherID) {
@@ -36,7 +38,7 @@ public class Teacher extends Person {
     }
 
     public String getTitle() {
-        return title;
+        return title != null ? title : "";
     }
 
     public void setTitle(String title) {
@@ -47,9 +49,9 @@ public class Teacher extends Person {
     public ByteArrayOutputStream serialize(ByteArrayOutputStream base) throws IOException {
         super.serialize(base);
         // teacherID
-        SerializeUtils.serializeToBytes(this.teacherID, base);
+        SerializeUtils.serializeToBytes(getTeacherID(), base);
         // title
-        SerializeUtils.serializeToBytes(this.title, base);
+        SerializeUtils.serializeToBytes(getTeacherID(), base);
         return base;
     }
 
@@ -61,5 +63,38 @@ public class Teacher extends Person {
         // title
         this.title = SerializeUtils.parseStringFromBytes(base);
         return this;
+    }
+
+    @Override
+    public int getDataCount() {
+        return super.getDataCount() + 2;
+    }
+
+    @Override
+    public List<String> getDataHeader() {
+        List<String> list = new ArrayList<>(List.of("教师号"));
+        list.addAll(super.getDataHeader());
+        list.add("职称");
+        return list;
+    }
+
+    @Override
+    public List<String> getDataRepresentation() {
+        List<String> list = new ArrayList<>(List.of(getTeacherID()));
+        list.addAll(super.getDataRepresentation());
+        list.add(getTitle());
+        return list;
+    }
+
+    @Override
+    public List<String> toStrings() {
+        return getDataRepresentation();
+    }
+
+    @Override
+    public void fromStrings(List<String> strings) {
+        this.teacherID = strings.get(0);
+        super.fromStrings(strings.subList(1, 4));
+        this.title = strings.get(4);
     }
 }

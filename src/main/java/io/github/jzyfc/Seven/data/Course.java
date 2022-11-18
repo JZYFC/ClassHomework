@@ -1,14 +1,14 @@
 package io.github.jzyfc.Seven.data;
 
-import io.github.jzyfc.Seven.Displayable;
 import io.github.jzyfc.Seven.serialization.ByteSerializable;
 import io.github.jzyfc.Seven.serialization.SerializeUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
-public class Course implements Displayable, ByteSerializable<Course> {
+public class Course implements Displayable, ByteSerializable<Course>, Modifiable {
     private String courseName;
     private String courseID;
     private int courseHour;
@@ -27,11 +27,11 @@ public class Course implements Displayable, ByteSerializable<Course> {
 
     @Override
     public String toString() {
-        return "课程名：%s, 课程ID：%s, 课时：%d".formatted(courseName, courseID, courseHour);
+        return "课程名：%s, 课程ID：%s, 课时：%d".formatted(getCourseName(), getCourseID(), getCourseHour());
     }
 
     public String getCourseName() {
-        return courseName;
+        return courseName != null ? courseName : "";
     }
 
     public void setCourseName(String courseName) {
@@ -39,7 +39,7 @@ public class Course implements Displayable, ByteSerializable<Course> {
     }
 
     public String getCourseID() {
-        return courseID;
+        return courseID != null ? courseID: "";
     }
 
     public void setCourseID(String courseID) {
@@ -56,9 +56,9 @@ public class Course implements Displayable, ByteSerializable<Course> {
 
     @Override
     public ByteArrayOutputStream serialize(ByteArrayOutputStream base) throws IOException {
-        SerializeUtils.serializeToBytes(this.courseName, base);
-        SerializeUtils.serializeToBytes(this.courseID, base);
-        SerializeUtils.serializeToBytes(this.courseHour, base);
+        SerializeUtils.serializeToBytes(getCourseHour(), base);
+        SerializeUtils.serializeToBytes(getCourseID(), base);
+        SerializeUtils.serializeToBytes(getCourseHour(), base);
         return base;
     }
 
@@ -68,5 +68,32 @@ public class Course implements Displayable, ByteSerializable<Course> {
         this.courseID = SerializeUtils.parseStringFromBytes(base);
         this.courseHour = SerializeUtils.parseIntFromBytes(base);
         return this;
+    }
+
+    @Override
+    public int getDataCount() {
+        return 3;
+    }
+
+    @Override
+    public List<String> getDataHeader() {
+        return List.of("课程名", "课程ID", "课时");
+    }
+
+    @Override
+    public List<String> getDataRepresentation() {
+        return List.of(getCourseName(), getCourseID(), String.valueOf(courseHour));
+    }
+
+    @Override
+    public List<String> toStrings() {
+        return getDataRepresentation();
+    }
+
+    @Override
+    public void fromStrings(List<String> strings) {
+        this.courseName = strings.get(0);
+        this.courseID = strings.get(1);
+        this.courseHour = Integer.parseInt(strings.get(2));
     }
 }

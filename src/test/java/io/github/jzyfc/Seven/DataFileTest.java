@@ -1,5 +1,6 @@
 package io.github.jzyfc.Seven;
 
+import io.github.jzyfc.Seven.data.Displayable;
 import io.github.jzyfc.Seven.data.Person;
 import io.github.jzyfc.Seven.serialization.DataFile;
 import org.junit.jupiter.api.Order;

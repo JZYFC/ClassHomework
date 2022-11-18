@@ -1,25 +1,25 @@
 package io.github.jzyfc.Seven.data;
 
-import io.github.jzyfc.Seven.Displayable;
 import io.github.jzyfc.Seven.serialization.ByteSerializable;
 import io.github.jzyfc.Seven.serialization.SerializeUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
-public class Person implements Displayable, ByteSerializable<Person> {
+public class Person implements Displayable, ByteSerializable<Person>, Modifiable {
     protected String name;
     protected String sex;
     protected int age;
 
     @Override
     public String toString() {
-        return "姓名：%s, 性别：%s, 年龄：%d".formatted(name, sex, age);
+        return "姓名：%s, 性别：%s, 年龄：%d".formatted(getName(), getSex(), getAge());
     }
 
     public String getName() {
-        return name;
+        return name != null ? name : "";
     }
 
     public void setName(String name) {
@@ -27,7 +27,7 @@ public class Person implements Displayable, ByteSerializable<Person> {
     }
 
     public String getSex() {
-        return sex;
+        return sex != null ? sex : "";
     }
 
     public void setSex(String sex) {
@@ -57,11 +57,11 @@ public class Person implements Displayable, ByteSerializable<Person> {
     @Override
     public ByteArrayOutputStream serialize(ByteArrayOutputStream base) throws IOException {
         // name
-        SerializeUtils.serializeToBytes(this.name, base);
+        SerializeUtils.serializeToBytes(getName(), base);
         // sex
-        SerializeUtils.serializeToBytes(this.sex, base);
+        SerializeUtils.serializeToBytes(getSex(), base);
         // age
-        SerializeUtils.serializeToBytes(this.age, base);
+        SerializeUtils.serializeToBytes(getAge(), base);
         return base;
     }
 
@@ -76,4 +76,30 @@ public class Person implements Displayable, ByteSerializable<Person> {
         return this;
     }
 
+    @Override
+    public int getDataCount() {
+        return 3;
+    }
+
+    @Override
+    public List<String> getDataHeader() {
+        return List.of("姓名", "性别", "年龄");
+    }
+
+    @Override
+    public List<String> getDataRepresentation() {
+        return List.of(getName(), getSex(), String.valueOf(age));
+    }
+
+    @Override
+    public List<String> toStrings() {
+        return getDataRepresentation();
+    }
+
+    @Override
+    public void fromStrings(List<String> strings) {
+        this.name = strings.get(0);
+        this.sex = strings.get(1);
+        this.age = Integer.parseInt(strings.get(2));
+    }
 }

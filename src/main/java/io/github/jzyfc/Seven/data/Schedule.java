@@ -1,14 +1,14 @@
 package io.github.jzyfc.Seven.data;
 
-import io.github.jzyfc.Seven.Displayable;
 import io.github.jzyfc.Seven.serialization.ByteSerializable;
 import io.github.jzyfc.Seven.serialization.SerializeUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
-public class Schedule implements Displayable, ByteSerializable<Schedule> {
+public class Schedule implements Displayable, ByteSerializable<Schedule>, Modifiable {
     private String classID;
     private String courseID;
     private String teacherID;
@@ -16,11 +16,11 @@ public class Schedule implements Displayable, ByteSerializable<Schedule> {
 
     @Override
     public String toString() {
-        return "班级名：%s, 课程名：%s, 教师名：%s, 教室：%s".formatted(classID, courseID, teacherID, classroom);
+        return "班级名：%s, 课程名：%s, 教师名：%s, 教室：%s".formatted(getClassID(), getCourseID(), getTeacherID(), getClassroom());
     }
 
     public String getClassID() {
-        return classID;
+        return classID != null ? classID : "";
     }
 
     public void setClassID(String classID) {
@@ -28,7 +28,7 @@ public class Schedule implements Displayable, ByteSerializable<Schedule> {
     }
 
     public String getCourseID() {
-        return courseID;
+        return courseID != null ? courseID : "";
     }
 
     public void setCourseID(String courseID) {
@@ -36,7 +36,7 @@ public class Schedule implements Displayable, ByteSerializable<Schedule> {
     }
 
     public String getTeacherID() {
-        return teacherID;
+        return teacherID != null ? teacherID : "";
     }
 
     public void setTeacherID(String teacherID) {
@@ -44,7 +44,7 @@ public class Schedule implements Displayable, ByteSerializable<Schedule> {
     }
 
     public String getClassroom() {
-        return classroom;
+        return classroom != null ? classroom : "";
     }
 
     public void setClassroom(String classroom) {
@@ -64,10 +64,10 @@ public class Schedule implements Displayable, ByteSerializable<Schedule> {
 
     @Override
     public ByteArrayOutputStream serialize(ByteArrayOutputStream base) throws IOException {
-        SerializeUtils.serializeToBytes(this.classID, base);
-        SerializeUtils.serializeToBytes(this.courseID, base);
-        SerializeUtils.serializeToBytes(this.teacherID, base);
-        SerializeUtils.serializeToBytes(this.classroom, base);
+        SerializeUtils.serializeToBytes(getClassID(), base);
+        SerializeUtils.serializeToBytes(getCourseID(), base);
+        SerializeUtils.serializeToBytes(getTeacherID(), base);
+        SerializeUtils.serializeToBytes(getClassroom(), base);
         return base;
     }
 
@@ -78,5 +78,33 @@ public class Schedule implements Displayable, ByteSerializable<Schedule> {
         this.teacherID = SerializeUtils.parseStringFromBytes(base);
         this.classroom = SerializeUtils.parseStringFromBytes(base);
         return this;
+    }
+
+    @Override
+    public int getDataCount() {
+        return 4;
+    }
+
+    @Override
+    public List<String> getDataHeader() {
+        return List.of("班级名", "课程名", "教师名", "教室");
+    }
+
+    @Override
+    public List<String> getDataRepresentation() {
+        return List.of(getClassID(), getCourseID(), getTeacherID(), getClassroom());
+    }
+
+    @Override
+    public List<String> toStrings() {
+        return getDataRepresentation();
+    }
+
+    @Override
+    public void fromStrings(List<String> strings) {
+        this.classID = strings.get(0);
+        this.courseID = strings.get(1);
+        this.teacherID = strings.get(2);
+        this.classroom = strings.get(3);
     }
 }
