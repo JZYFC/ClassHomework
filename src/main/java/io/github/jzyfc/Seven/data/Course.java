@@ -56,7 +56,7 @@ public class Course implements Displayable, ByteSerializable<Course>, Modifiable
 
     @Override
     public ByteArrayOutputStream serialize(ByteArrayOutputStream base) throws IOException {
-        SerializeUtils.serializeToBytes(getCourseHour(), base);
+        SerializeUtils.serializeToBytes(getCourseName(), base);
         SerializeUtils.serializeToBytes(getCourseID(), base);
         SerializeUtils.serializeToBytes(getCourseHour(), base);
         return base;

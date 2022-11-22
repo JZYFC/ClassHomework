@@ -51,7 +51,7 @@ public class Teacher extends Person {
         // teacherID
         SerializeUtils.serializeToBytes(getTeacherID(), base);
         // title
-        SerializeUtils.serializeToBytes(getTeacherID(), base);
+        SerializeUtils.serializeToBytes(getTitle(), base);
         return base;
     }
 

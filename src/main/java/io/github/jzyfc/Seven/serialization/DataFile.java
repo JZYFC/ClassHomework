@@ -1,7 +1,5 @@
 package io.github.jzyfc.Seven.serialization;
 
-import io.github.jzyfc.Seven.serialization.ByteSerializable;
-
 import java.io.*;
 import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
@@ -9,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class DataFile<T extends ByteSerializable<T>> {
+public class DataFile<T extends ByteSerializable<? super T>> {
     private final File opFile;
 
     private final Supplier<T> supplier;
@@ -30,9 +28,11 @@ public class DataFile<T extends ByteSerializable<T>> {
             try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes)) {
                 while (true) {
                     try {
-                        T obj = supplier.get().deserialize(bis);
+                        @SuppressWarnings("unchecked")
+                        T obj = (T) supplier.get().deserialize(bis);
                         returnList.add(obj);
                     } catch (BufferUnderflowException e) {
+//                        e.printStackTrace();
                         break;
                     }
                 }
