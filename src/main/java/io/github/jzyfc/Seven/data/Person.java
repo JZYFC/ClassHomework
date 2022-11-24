@@ -2,13 +2,14 @@ package io.github.jzyfc.Seven.data;
 
 import io.github.jzyfc.Seven.serialization.ByteSerializable;
 import io.github.jzyfc.Seven.serialization.SerializeUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-public class Person implements Displayable, ByteSerializable<Person>, Modifiable {
+public class Person implements Displayable, ByteSerializable<Person>, Modifiable, Comparable<Person> {
     protected String name;
     protected String sex;
     protected int age;
@@ -101,5 +102,10 @@ public class Person implements Displayable, ByteSerializable<Person>, Modifiable
         this.name = strings.get(0);
         this.sex = strings.get(1);
         this.age = Integer.parseInt(strings.get(2));
+    }
+
+    @Override
+    public int compareTo(@NotNull Person o) {
+        return this.name.compareTo(o.name);
     }
 }
