@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+/**
+ * Display data in a table and provide some buttons
+ *
+ * @param <T> type will be displayed
+ */
 public class DataPanel<T extends Displayable & Modifiable> extends JPanel {
 
     private JFrame mainFrame;

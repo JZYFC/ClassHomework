@@ -12,6 +12,10 @@ public class DataFile<T extends ByteSerializable<? super T>> {
 
     private final Supplier<T> supplier;
 
+    /**
+     * @param opFile the data storing file
+     * @param emptyConstructor an empty constructor of T for deserialization
+     */
     public DataFile(File opFile, Supplier<T> emptyConstructor) {
         this.opFile = opFile;
         this.supplier = emptyConstructor;
@@ -21,6 +25,10 @@ public class DataFile<T extends ByteSerializable<? super T>> {
         return opFile;
     }
 
+
+    /**
+     * @return a list of deserialize objects
+     */
     public List<T> readFile() {
         try (FileInputStream fis = new FileInputStream(opFile)) {
             byte[] bytes = fis.readAllBytes();
@@ -44,6 +52,9 @@ public class DataFile<T extends ByteSerializable<? super T>> {
         return null;
     }
 
+    /**
+     * @param array elements in this array will be written in to the file
+     */
     public void writeFile(T[] array) {
         try {
             try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
@@ -60,6 +71,9 @@ public class DataFile<T extends ByteSerializable<? super T>> {
         }
     }
 
+    /**
+     * @param collection elements in this collection will be written in to the file
+     */
     public void writeFile(Collection<T> collection) {
         try {
             try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {

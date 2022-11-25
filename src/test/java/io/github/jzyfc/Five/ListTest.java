@@ -84,6 +84,7 @@ class ListTest {
     void append() {
         System.out.println(list);
         list.append(5);
+        System.out.println(list);
         List<Integer> newList = new List<>();
         newList.append(1);
         newList.append(2);

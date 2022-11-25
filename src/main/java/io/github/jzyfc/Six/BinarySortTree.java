@@ -17,16 +17,30 @@ public class BinarySortTree<T extends Comparable<T>> {
 
     private Node root;
 
+    /**
+     * Construct an empty binary sort tree.
+     */
     public BinarySortTree() {
         this.root = null;
     }
 
+
+    /**
+     * Construct a binary sort tree use data in given collection.
+     *
+     * @param collection elements in this collection will be used to construct a binary sort tree
+     */
     public BinarySortTree(Collection<T> collection) {
         for (T elem : collection) {
             insert(elem);
         }
     }
 
+    /**
+     * Insert the given data to binary sort tree
+     *
+     * @param data the data will be inserted
+     */
     public void insert(T data) {
         if (this.root == null) {
             this.root = new Node(data);
@@ -54,6 +68,13 @@ public class BinarySortTree<T extends Comparable<T>> {
         }
     }
 
+
+    /**
+     * Delete given data in binary sort tree
+     *
+     * @param data the data to be deleted
+     * @return {@code true} if delete succeed, {@code false} if delete failed
+     */
     public boolean delete(T data) {
         if (root == null) return false;
         boolean found = false;
@@ -119,10 +140,22 @@ public class BinarySortTree<T extends Comparable<T>> {
         return true;
     }
 
+    /**
+     * Print all elements in binary sort tree in pre-order.
+     *
+     * @see #preOrder(Consumer)
+     * @see Consumer
+     */
     public void preOrder() {
         preOrder(System.out::println);
     }
 
+    /**
+     * Perform given operation on all elements in binary sort tree in pre-order.
+     *
+     * @param operation operation to be performed on elements
+     * @see Consumer
+     */
     public void preOrder(Consumer<T> operation) {
         preOrder(root, operation);
     }
@@ -134,10 +167,22 @@ public class BinarySortTree<T extends Comparable<T>> {
         preOrder(node.right, operation);
     }
 
+    /**
+     * Print all elements in binary sort tree in mid-order.
+     *
+     * @see #midOrder(Consumer)
+     * @see Consumer
+     */
     public void midOrder() {
         midOrder(System.out::println);
     }
 
+    /**
+     * Perform given operation on all elements in binary sort tree in mid-order.
+     *
+     * @param operation operation to be performed on elements
+     * @see Consumer
+     */
     public void midOrder(Consumer<T> operation) {
         midOrder(root, operation);
     }
@@ -149,12 +194,24 @@ public class BinarySortTree<T extends Comparable<T>> {
         midOrder(node.right, operation);
     }
 
+    /**
+     * Print all elements in binary sort tree in post-order.
+     *
+     * @see #postOrder(Consumer)
+     * @see Consumer
+     */
     public void postOrder() {
         postOrder(System.out::println);
     }
 
-    public void postOrder(Consumer<T> consumer) {
-        postOrder(root, consumer);
+    /**
+     * Perform given operation on all elements in binary sort tree in post-order.
+     *
+     * @param operation operation to be performed on elements
+     * @see Consumer
+     */
+    public void postOrder(Consumer<T> operation) {
+        postOrder(root, operation);
     }
 
     private void postOrder(Node node, Consumer<T> operation) {

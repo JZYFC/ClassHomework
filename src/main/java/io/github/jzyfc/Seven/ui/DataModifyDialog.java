@@ -18,6 +18,13 @@ public class DataModifyDialog<T extends Modifiable> extends JDialog {
 
     private final T obj;
 
+    /**
+     * In constructor, a dialog will open for user to modify data.
+     *
+     * @param name names of your data
+     * @param owner parent frame
+     * @param obj an object to be modified
+     */
     public DataModifyDialog(List<String> name, Frame owner, T obj) {
         super(owner, true);
         this.obj = obj;
@@ -58,6 +65,9 @@ public class DataModifyDialog<T extends Modifiable> extends JDialog {
         this.setVisible(true);
     }
 
+    /**
+     * @return modified data
+     */
     public Optional<T> fetchData() {
         if (!this.confirmed) return Optional.empty();
         obj.fromStrings(textFields.stream().map(JTextComponent::getText).toList());
