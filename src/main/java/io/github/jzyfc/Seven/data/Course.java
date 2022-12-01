@@ -19,7 +19,7 @@ public class Course implements Displayable, ByteSerializable<Course>, Modifiable
         this.courseHour = 0;
     }
 
-    public Course(String courseName, String courseID, int courseHour) {
+    public Course(String courseID, String courseName, int courseHour) {
         this.courseName = courseName;
         this.courseID = courseID;
         this.courseHour = courseHour;

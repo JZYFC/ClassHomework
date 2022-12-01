@@ -9,22 +9,22 @@ import java.io.IOException;
 import java.util.List;
 
 public class Schedule implements Displayable, ByteSerializable<Schedule>, Modifiable {
-    private String classID;
+    private String scheduleID;
     private String courseID;
     private String teacherID;
     private String classroom;
 
     @Override
     public String toString() {
-        return "班级名：%s, 课程名：%s, 教师名：%s, 教室：%s".formatted(getClassID(), getCourseID(), getTeacherID(), getClassroom());
+        return "班级名：%s, 课程名：%s, 教师名：%s, 教室：%s".formatted(getScheduleID(), getCourseID(), getTeacherID(), getClassroom());
     }
 
-    public String getClassID() {
-        return classID != null ? classID : "";
+    public String getScheduleID() {
+        return scheduleID != null ? scheduleID : "";
     }
 
-    public void setClassID(String classID) {
-        this.classID = classID;
+    public void setScheduleID(String scheduleID) {
+        this.scheduleID = scheduleID;
     }
 
     public String getCourseID() {
@@ -52,11 +52,11 @@ public class Schedule implements Displayable, ByteSerializable<Schedule>, Modifi
     }
 
     public Schedule() {
-        this.classID = this.courseID = this.teacherID = this.classroom = null;
+        this.scheduleID = this.courseID = this.teacherID = this.classroom = null;
     }
 
-    public Schedule(String classID, String courseID, String teacherID, String classroom) {
-        this.classID = classID;
+    public Schedule(String scheduleID, String courseID, String teacherID, String classroom) {
+        this.scheduleID = scheduleID;
         this.courseID = courseID;
         this.teacherID = teacherID;
         this.classroom = classroom;
@@ -64,7 +64,7 @@ public class Schedule implements Displayable, ByteSerializable<Schedule>, Modifi
 
     @Override
     public ByteArrayOutputStream serialize(ByteArrayOutputStream base) throws IOException {
-        SerializeUtils.serializeToBytes(getClassID(), base);
+        SerializeUtils.serializeToBytes(getScheduleID(), base);
         SerializeUtils.serializeToBytes(getCourseID(), base);
         SerializeUtils.serializeToBytes(getTeacherID(), base);
         SerializeUtils.serializeToBytes(getClassroom(), base);
@@ -73,7 +73,7 @@ public class Schedule implements Displayable, ByteSerializable<Schedule>, Modifi
 
     @Override
     public Schedule deserialize(ByteArrayInputStream base) throws IOException {
-        this.classID = SerializeUtils.parseStringFromBytes(base);
+        this.scheduleID = SerializeUtils.parseStringFromBytes(base);
         this.courseID = SerializeUtils.parseStringFromBytes(base);
         this.teacherID = SerializeUtils.parseStringFromBytes(base);
         this.classroom = SerializeUtils.parseStringFromBytes(base);
@@ -92,7 +92,7 @@ public class Schedule implements Displayable, ByteSerializable<Schedule>, Modifi
 
     @Override
     public List<String> getDataRepresentation() {
-        return List.of(getClassID(), getCourseID(), getTeacherID(), getClassroom());
+        return List.of(getScheduleID(), getCourseID(), getTeacherID(), getClassroom());
     }
 
     @Override
@@ -102,7 +102,7 @@ public class Schedule implements Displayable, ByteSerializable<Schedule>, Modifi
 
     @Override
     public void fromStrings(List<String> strings) {
-        this.classID = strings.get(0);
+        this.scheduleID = strings.get(0);
         this.courseID = strings.get(1);
         this.teacherID = strings.get(2);
         this.classroom = strings.get(3);

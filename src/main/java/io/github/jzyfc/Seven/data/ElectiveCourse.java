@@ -11,11 +11,11 @@ import java.util.List;
 public class ElectiveCourse implements Displayable, ByteSerializable<ElectiveCourse>, Modifiable {
     private String electiveID;
     private String studentID;
-    private String classID;
+    private String scheduleID;
 
     @Override
     public String toString() {
-        return "选课号：%s, 学生号：%s, 课程号：%s".formatted(getElectiveID(), getStudentID(), getClassID());
+        return "选课号：%s, 学生号：%s, 课程号：%s".formatted(getElectiveID(), getStudentID(), getScheduleID());
     }
 
     public String getElectiveID() {
@@ -27,36 +27,36 @@ public class ElectiveCourse implements Displayable, ByteSerializable<ElectiveCou
     }
 
     public String getStudentID() {
-        return studentID != null ? electiveID : "";
+        return studentID != null ? studentID : "";
     }
 
     public void setStudentID(String studentID) {
         this.studentID = studentID;
     }
 
-    public String getClassID() {
-        return classID != null ? classID : "";
+    public String getScheduleID() {
+        return scheduleID != null ? scheduleID : "";
     }
 
-    public void setClassID(String classID) {
-        this.classID = classID;
+    public void setScheduleID(String scheduleID) {
+        this.scheduleID = scheduleID;
     }
 
     public ElectiveCourse() {
-        this.electiveID = this.studentID = this.classID = null;
+        this.electiveID = this.studentID = this.scheduleID = null;
     }
 
-    public ElectiveCourse(String electiveID, String studentID, String classID) {
+    public ElectiveCourse(String electiveID, String studentID, String scheduleID) {
         this.electiveID = electiveID;
         this.studentID = studentID;
-        this.classID = classID;
+        this.scheduleID = scheduleID;
     }
 
     @Override
     public ByteArrayOutputStream serialize(ByteArrayOutputStream base) throws IOException {
         SerializeUtils.serializeToBytes(getElectiveID(), base);
         SerializeUtils.serializeToBytes(getStudentID(), base);
-        SerializeUtils.serializeToBytes(getClassID(), base);
+        SerializeUtils.serializeToBytes(getScheduleID(), base);
         return base;
     }
 
@@ -64,7 +64,7 @@ public class ElectiveCourse implements Displayable, ByteSerializable<ElectiveCou
     public ElectiveCourse deserialize(ByteArrayInputStream base) throws IOException {
         this.electiveID = SerializeUtils.parseStringFromBytes(base);
         this.studentID = SerializeUtils.parseStringFromBytes(base);
-        this.classID = SerializeUtils.parseStringFromBytes(base);
+        this.scheduleID = SerializeUtils.parseStringFromBytes(base);
         return this;
     }
 
@@ -80,7 +80,7 @@ public class ElectiveCourse implements Displayable, ByteSerializable<ElectiveCou
 
     @Override
     public List<String> getDataRepresentation() {
-        return List.of(getElectiveID(), getStudentID(), getClassID());
+        return List.of(getElectiveID(), getStudentID(), getScheduleID());
     }
 
     @Override
@@ -92,6 +92,6 @@ public class ElectiveCourse implements Displayable, ByteSerializable<ElectiveCou
     public void fromStrings(List<String> strings) {
         this.electiveID = strings.get(0);
         this.studentID = strings.get(1);
-        this.classID = strings.get(2);
+        this.scheduleID = strings.get(2);
     }
 }
