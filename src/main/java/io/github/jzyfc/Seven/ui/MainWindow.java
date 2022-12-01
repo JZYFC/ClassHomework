@@ -157,34 +157,34 @@ public class MainWindow extends JFrame {
     }
 
     private void loadFile() {
-        teacherList = new ArrayList<>(List.of(
-                new Teacher("1", "张三", "男", 18, "教授"),
-                new Teacher("2", "李四", "男", 18, "教授"),
-                new Teacher("3", "王五", "男", 18, "教授")
-        ));
-        studentList = new ArrayList<>(List.of(
-                new Student("1", "吴五", "男", 18, "Software")
-        ));
-        courseList = new ArrayList<>(List.of(
-                new Course("1", "编译原理", 96),
-                new Course("2", "编译原", 96),
-                new Course("3", "编译", 96)
-        ));
-        scheduleList = new ArrayList<>(List.of(
-                new Schedule("1", "1", "1", "103"),
-                new Schedule("2", "2", "2", "104"),
-                new Schedule("3", "3", "3", "105")
-        ));
-        electiveList = new ArrayList<>(List.of(
-                new ElectiveCourse("1", "1", "1"),
-                new ElectiveCourse("2", "1", "2"),
-                new ElectiveCourse("3", "1", "3")
-        ));
-//        teacherList = new ArrayList<>(teacherDataFile.readFile());
-//        studentList = new ArrayList<>(studentDataFile.readFile());
-//        courseList = new ArrayList<>(courseDataFile.readFile());
-//        scheduleList = new ArrayList<>(scheduleDataFile.readFile());
-//        electiveList = new ArrayList<>(electiveDataFile.readFile());
+//        teacherList = new ArrayList<>(List.of(
+//                new Teacher("1", "张三", "男", 18, "教授"),
+//                new Teacher("2", "李四", "男", 18, "教授"),
+//                new Teacher("3", "王五", "男", 18, "教授")
+//        ));
+//        studentList = new ArrayList<>(List.of(
+//                new Student("1", "吴五", "男", 18, "Software")
+//        ));
+//        courseList = new ArrayList<>(List.of(
+//                new Course("1", "编译原理", 96),
+//                new Course("2", "编译原", 96),
+//                new Course("3", "编译", 96)
+//        ));
+//        scheduleList = new ArrayList<>(List.of(
+//                new Schedule("1", "1", "1", "103"),
+//                new Schedule("2", "2", "2", "104"),
+//                new Schedule("3", "3", "3", "105")
+//        ));
+//        electiveList = new ArrayList<>(List.of(
+//                new ElectiveCourse("1", "1", "1"),
+//                new ElectiveCourse("2", "1", "2"),
+//                new ElectiveCourse("3", "1", "3")
+//        ));
+        teacherList = new ArrayList<>(teacherDataFile.readFile());
+        studentList = new ArrayList<>(studentDataFile.readFile());
+        courseList = new ArrayList<>(courseDataFile.readFile());
+        scheduleList = new ArrayList<>(scheduleDataFile.readFile());
+        electiveList = new ArrayList<>(electiveDataFile.readFile());
     }
 
     private void saveFile() {
